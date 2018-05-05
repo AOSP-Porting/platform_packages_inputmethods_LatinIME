@@ -18,6 +18,7 @@ package com.android.inputmethod.latin.settings;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.Preference;
@@ -54,6 +55,11 @@ public final class SettingsFragment extends InputMethodSettingsFragment {
         if (!ProductionFlags.ENABLE_ACCOUNT_SIGN_IN) {
             final Preference accountsPreference = findPreference(Settings.SCREEN_ACCOUNTS);
             preferenceScreen.removePreference(accountsPreference);
+        }
+        Resources res = getActivity().getResources();
+        if (!Settings.readFromBuildConfigIfGestureInputEnabled(res)) {
+            final Preference gesturePreference = findPreference(Settings.SCREEN_GESTURE);
+            preferenceScreen.removePreference(gesturePreference);
         }
     }
 
